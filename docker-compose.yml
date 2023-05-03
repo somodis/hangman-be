@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  database:
+    image: mysql:8.0.28
+    container_name: hangman-be-db
+    command:
+      [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-authentication-plugin=mysql_native_password',
+      ]
+    environment:
+      MYSQL_DATABASE: hangman_game
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3308:3306'
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
