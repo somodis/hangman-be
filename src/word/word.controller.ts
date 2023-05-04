@@ -8,9 +8,9 @@ import {
   Delete,
 } from '@nestjs/common';
 import { WordService } from './word.service';
-import { WordDto } from './dto/word.dto';
+import { DifficultyLevel, WordDto } from './dto/word.dto';
 
-@Controller('word')
+@Controller('words')
 export class WordController {
   constructor(private readonly wordService: WordService) {}
 
@@ -29,13 +29,8 @@ export class WordController {
     return this.wordService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWordDto: WordDto) {
-    return this.wordService.update(+id, updateWordDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.wordService.remove(+id);
+  @Get('/random/:level')
+  findRandomByLevel(@Param('level') level: DifficultyLevel) {
+    return this.wordService.findRandomByLevel(level);
   }
 }

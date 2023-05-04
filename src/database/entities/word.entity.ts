@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { GameEntity } from './game.entity';
 
 @Entity({ name: 'word' })
 export class WordEntity {
@@ -13,4 +14,11 @@ export class WordEntity {
     nullable: false,
   })
   word: string;
+
+  @Column({
+    name: 'word_length',
+    type: 'int',
+    nullable: false,
+  })
+  wordLength: number;
 }

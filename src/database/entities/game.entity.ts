@@ -33,4 +33,9 @@ export class GameEntity {
     type: 'varchar',
   })
   guessedLetters: string[];
+
+  @Column({
+    type: 'tinyint',
+  })
+  isWinner: boolean;
 }

@@ -33,6 +33,11 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
+  async findUserGame(userId: number) {
+    //todo
+    return this.usersRepository.find({relations: {game: true}, where: {game: {id: 1}}})
+  }
+
   async findByUserName(username: string) {
     return await this.usersRepository.findOneBy({ username });
   }

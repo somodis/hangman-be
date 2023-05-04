@@ -1,25 +1,49 @@
-import { Injectable } from '@nestjs/common';
-import { WordDto } from './dto/word.dto';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { DifficultyLevel, WordDto } from './dto/word.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { WordEntity } from 'src/database/entities';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class WordService {
-  async create(createWordDto: WordDto) {
-    return 'This action adds a new word';
+  constructor(
+    @InjectRepository(WordEntity)
+    private readonly wordRepository: Repository<WordEntity>,
+  ) {}
+
+  async create(data: WordDto) {
+    const word = await this.findOneByWord(data.word);
+
+    if (word) {
+      throw new BadRequestException('WORD_ALREADY_EXISTS');
+    }
+
+    return await this.wordRepository.save({...data, wordLength: data.word.length });
   }
 
   async findAll() {
-    return `This action returns all word`;
+    return this.wordRepository.find();
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} word`;
+    const word = await this.wordRepository.findOneBy({ id });
+    if (!word) {
+      throw new NotFoundException();
+    }
+    return word;
   }
 
-  async update(id: number, updateWordDto: WordDto) {
-    return `This action updates a #${id} word`;
+  async findOneByWord(word: string) {
+    return this.wordRepository.findOneBy({ word });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} word`;
+  async findRandomByLevel(level: DifficultyLevel) {
+    // qb filter based on level, 
+    // dump used words (game log / view)
+    return `random unique word by level ${level}`;
   }
 }

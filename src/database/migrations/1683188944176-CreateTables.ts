@@ -29,6 +29,12 @@ export class CreateTables1683188944176 implements MigrationInterface {
             type: 'varchar',
             isNullable: false,
           },
+          {
+            name: 'score',
+            type: 'int',
+            isNullable: false,
+            default: 0
+          },
         ],
       }),
     );
@@ -48,6 +54,11 @@ export class CreateTables1683188944176 implements MigrationInterface {
           {
             name: 'word',
             type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'word_length',
+            type: 'int',
             isNullable: false,
           },
         ],
@@ -80,6 +91,10 @@ export class CreateTables1683188944176 implements MigrationInterface {
             name: 'guessed_letters',
             type: 'varchar',
           },
+          {
+            name: 'isWinner',
+            type: 'tinyint',
+          },
         ],
       }),
     );
@@ -111,7 +126,7 @@ export class CreateTables1683188944176 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('game', true, true);
-    await queryRunner.dropTable('user');
-    await queryRunner.dropTable('word');
+    await queryRunner.dropTable('user', true, true);
+    await queryRunner.dropTable('word', true, true);
   }
 }

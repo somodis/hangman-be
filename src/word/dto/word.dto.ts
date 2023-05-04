@@ -7,3 +7,9 @@ export class WordDto {
   @MaxLength(255)
   word: string;
 }
+
+export enum DifficultyLevel {
+  EASY = 'Easy',
+  MEDIUM = 'Medium',
+  HARD = 'Hard',
+}
