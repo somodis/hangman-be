@@ -17,10 +17,12 @@ export class UsersService {
 
     if (user) {
       throw new BadRequestException('USER_ALREADY_EXISTS');
-    } else {
-      const hashedPassword = await hash(data.password, 10);
-      return await this.usersRepository.save({ ...data, password: hashedPassword });
     }
+    const hashedPassword = await hash(data.password, 10);
+    return await this.usersRepository.save({
+      ...data,
+      password: hashedPassword,
+    });
   }
 
   async findAll() {
@@ -28,17 +30,10 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.usersRepository.findOneBy({ id });
   }
+
   async findByUserName(username: string) {
-    return await this.usersRepository.findOneBy({username});
-  }
-
-  async update(id: number, updateUserDto: UserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  async remove(id: number) {
-    return `This action removes a #${id} user`;
+    return await this.usersRepository.findOneBy({ username });
   }
 }

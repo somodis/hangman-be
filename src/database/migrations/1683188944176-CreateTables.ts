@@ -110,8 +110,8 @@ export class CreateTables1683188944176 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('game', true, true);
     await queryRunner.dropTable('user');
     await queryRunner.dropTable('word');
-    await queryRunner.dropTable('game', true, true);
   }
 }

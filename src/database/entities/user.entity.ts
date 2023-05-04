@@ -17,7 +17,7 @@ export class UserEntity {
   @Column({
     type: 'varchar',
     nullable: false,
-    select: false
+    select: false,
   })
   @ApiHideProperty()
   password: string;
