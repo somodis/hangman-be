@@ -1,6 +1,7 @@
 import { ApiHideProperty } from '@nestjs/swagger';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { GameEntity } from './game.entity';
+import { Role } from 'src/common/role-enum';
 
 @Entity({ name: 'user' })
 export class UserEntity {
@@ -22,6 +23,9 @@ export class UserEntity {
   })
   @ApiHideProperty()
   password: string;
+
+  @Column({ name: 'role', type: 'varchar', nullable: true })
+  role: Role;
 
   @OneToMany(() => GameEntity, (game: GameEntity) => game.user)
   games: GameEntity[];

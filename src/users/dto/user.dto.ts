@@ -1,5 +1,6 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsEnum, IsString } from 'class-validator';
+import { Role } from 'src/common/role-enum';
 
 export class UserDto {
   @ApiProperty()
@@ -9,4 +10,9 @@ export class UserDto {
   @ApiHideProperty()
   @IsString()
   password: string;
+
+  @IsEnum(Role)
+  role: Role;
+
+  // todo: többi prop?
 }

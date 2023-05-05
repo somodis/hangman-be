@@ -30,6 +30,11 @@ export class CreateTables1683188944176 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'role',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
             name: 'score',
             type: 'int',
             isNullable: false,
