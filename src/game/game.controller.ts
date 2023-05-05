@@ -33,5 +33,4 @@ export class GameController {
   update(@Param('id') id: string, @Body() updateGameDto: GameDto) {
     return this.gameService.update(+id, updateGameDto);
   }
-
 }

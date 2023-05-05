@@ -23,13 +23,19 @@ export class UserEntity {
   @ApiHideProperty()
   password: string;
 
-  @ManyToOne(() => GameEntity, (game) => game.userId)
-  game: GameEntity
+  @ManyToOne(() => GameEntity, (game) => game.user)
+  game: GameEntity;
 
   @Column({
     type: 'int',
     nullable: false,
-    default: 0
+    default: 0,
   })
   score: number;
+
+  @Column({
+    type: 'tinyint',
+    default: 0,
+  })
+  isInGame: boolean;
 }

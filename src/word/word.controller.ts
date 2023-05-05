@@ -31,6 +31,7 @@ export class WordController {
 
   @Get('/random/:level')
   findRandomByLevel(@Param('level') level: DifficultyLevel) {
-    return this.wordService.findRandomByLevel(level);
+    // todo: userId
+    return this.wordService.findRandomByLevel(level, 1);
   }
 }

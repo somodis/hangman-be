@@ -20,7 +20,7 @@ export class GameService {
   }
 
   async findOne(id: number) {
-    return this.gameRepository.findOneBy({id});
+    return this.gameRepository.findOneBy({ id });
   }
 
   async update(id: number, data: GameDto) {

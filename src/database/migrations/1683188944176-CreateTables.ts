@@ -33,7 +33,13 @@ export class CreateTables1683188944176 implements MigrationInterface {
             name: 'score',
             type: 'int',
             isNullable: false,
-            default: 0
+            default: 0,
+          },
+          {
+            name: 'isInGame',
+            type: 'tinyint',
+            isNullable: false,
+            default: 0,
           },
         ],
       }),
@@ -90,10 +96,7 @@ export class CreateTables1683188944176 implements MigrationInterface {
           {
             name: 'guessed_letters',
             type: 'varchar',
-          },
-          {
-            name: 'isWinner',
-            type: 'tinyint',
+            isNullable: true,
           },
         ],
       }),

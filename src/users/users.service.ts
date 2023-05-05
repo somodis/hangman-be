@@ -35,7 +35,10 @@ export class UsersService {
 
   async findUserGame(userId: number) {
     //todo
-    return this.usersRepository.find({relations: {game: true}, where: {game: {id: 1}}})
+    return this.usersRepository.find({
+      relations: { game: true },
+      where: { game: { id: 1 } },
+    });
   }
 
   async findByUserName(username: string) {

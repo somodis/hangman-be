@@ -8,7 +8,7 @@ export class FillWordsTable1683196461011 implements MigrationInterface {
       words.map(async (currentWord) => {
         const newWord = queryRunner.manager.create(WordEntity, {
           word: currentWord,
-          wordLength: currentWord.length
+          wordLength: currentWord.length,
         });
         await queryRunner.manager.save(newWord);
       }),

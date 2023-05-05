@@ -9,7 +9,22 @@ export class WordDto {
 }
 
 export enum DifficultyLevel {
-  EASY = 'Easy',
-  MEDIUM = 'Medium',
-  HARD = 'Hard',
+  EASY = 'easy',
+  MEDIUM = 'medium',
+  HARD = 'hard',
 }
+
+export const LevelLengths = {
+  easy: {
+    minLength: 6,
+    maxLength: 8,
+  },
+  medium: {
+    minLength: 9,
+    maxLength: 11,
+  },
+  hard: {
+    minLength: 12,
+    maxLength: 14,
+  },
+};

@@ -20,22 +20,18 @@ export class GameEntity {
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'word_id' })
-  public wordId: WordEntity;
+  word: WordEntity;
 
   @ManyToOne(() => UserEntity, (user: UserEntity) => user.id, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })
-  public userId: UserEntity;
+  user: UserEntity;
 
   @Column({
     type: 'varchar',
+    name: 'guessed_letters',
   })
   guessedLetters: string[];
-
-  @Column({
-    type: 'tinyint',
-  })
-  isWinner: boolean;
 }
