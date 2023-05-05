@@ -7,7 +7,7 @@ import {
   Req,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
 import { UsersService } from './users.service';
@@ -17,8 +17,8 @@ import { TokenGuard } from 'src/auth/guards/token.guard';
 import { RoleGuard } from 'src/auth/guards/role.guard';
 import { UserEntity } from 'src/database/entities';
 import { Id } from 'src/common/id.decorator';
-import { hasUser } from 'src/common/has-user';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

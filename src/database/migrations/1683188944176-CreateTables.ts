@@ -110,7 +110,7 @@ export class CreateTables1683188944176 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'game',
       new TableForeignKey({
-        name: 'FK_user_game',
+        name: 'FK_game_user',
         columnNames: ['user_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'user',
@@ -122,7 +122,7 @@ export class CreateTables1683188944176 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'game',
       new TableForeignKey({
-        name: 'FK_word_game',
+        name: 'FK_game_word',
         columnNames: ['word_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'word',

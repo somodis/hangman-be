@@ -1,7 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNumber } from 'class-validator';
+import { IsArray, IsNumber, IsOptional } from 'class-validator';
 
 export class GameDto {
+  @IsOptional()
+  @IsNumber()
+  id?: number;
+
   @ApiProperty()
   @IsNumber()
   wordId: number;
@@ -10,7 +14,8 @@ export class GameDto {
   @IsNumber()
   userId: number;
 
+  @IsOptional()
   @ApiProperty()
   @IsArray()
-  guessedLetters: string[];
+  guessedLetters?: string[];
 }

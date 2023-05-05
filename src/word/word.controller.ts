@@ -13,10 +13,11 @@ import { RoleGuard } from 'src/auth/guards/role.guard';
 import { TokenGuard } from 'src/auth/guards/token.guard';
 import { Role } from 'src/common/role-enum';
 import { DifficultyLevel, WordDto } from './dto/word.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Id } from 'src/common/id.decorator';
 import { Request } from 'express';
 
+@ApiTags('words')
 @Controller('words')
 export class WordController {
   constructor(private readonly wordService: WordService) {}

@@ -38,7 +38,7 @@ export class UsersService {
 
     if (userId) {
       const me = await this.usersRepository.findOneBy({ id: userId });
-      me.score < toplist[limit - 1].score && toplist.push(me);
+      me.score < toplist[toplist.length - 1].score && toplist.push(me);
     }
 
     return toplist;
