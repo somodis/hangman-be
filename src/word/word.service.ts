@@ -51,7 +51,6 @@ export class WordService {
   }
 
   async findRandomByLevel(level: DifficultyLevel, userId: number) {
-    
     const playedWords = await this.gameRepository.find({
       where: { user: { id: userId } },
     });

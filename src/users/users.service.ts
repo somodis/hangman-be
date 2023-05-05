@@ -3,7 +3,7 @@ import { UserDto } from './dto/user.dto';
 import { hash } from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/database/entities';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -28,16 +28,31 @@ export class UsersService {
   async findAll() {
     return this.usersRepository.find();
   }
+  async scoreboard(userId?: number) {
+    const limit = 3;
+
+    const toplist = await this.usersRepository.find({
+      order: { score: 'DESC' },
+      take: limit,
+    });
+
+    if (userId) {
+      const me = await this.usersRepository.findOneBy({ id: userId });
+      me.score < toplist[limit - 1].score && toplist.push(me);
+    }
+
+    return toplist;
+  }
 
   async findOne(id: number) {
     return this.usersRepository.findOneBy({ id });
   }
 
-  async findUserGame(userId: number) {
-    //todo
+  async findUserGames(userId: number) {
+    //todo userid
     return this.usersRepository.find({
-      relations: { game: true },
-      where: { game: { id: 1 } },
+      relations: { games: true },
+      where: { games: { id: In([1]) } },
     });
   }
 

@@ -21,6 +21,11 @@ export class UsersController {
     return 'me';
   }
 
+  @Get('scoreboard')
+  scoreboard() {
+    return this.usersService.scoreboard();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);

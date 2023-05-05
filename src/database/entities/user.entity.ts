@@ -1,5 +1,5 @@
 import { ApiHideProperty } from '@nestjs/swagger';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { GameEntity } from './game.entity';
 
 @Entity({ name: 'user' })
@@ -23,8 +23,8 @@ export class UserEntity {
   @ApiHideProperty()
   password: string;
 
-  @ManyToOne(() => GameEntity, (game) => game.user)
-  game: GameEntity;
+  @OneToMany(() => GameEntity, (game: GameEntity) => game.user)
+  games: GameEntity[];
 
   @Column({
     type: 'int',
