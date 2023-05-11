@@ -1,5 +1,5 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, MinLength } from 'class-validator';
 import { Role } from 'src/common/role-enum';
 
 export class UserDto {
@@ -18,8 +18,22 @@ export class UserDto {
   role: Role;
 
   @IsOptional()
+  @IsNumber()
   score?: number;
 
   @IsOptional()
+  @IsNumber()
+  isInGame?: boolean;
+}
+
+export class UpdateUserDto {
+  id: number;
+  
+  @IsOptional()
+  @IsNumber()
+  score?: number;
+
+  @IsOptional()
+  @IsNumber()
   isInGame?: boolean;
 }

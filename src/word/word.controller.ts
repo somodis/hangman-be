@@ -7,15 +7,16 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 
 import { WordService } from './word.service';
 import { RoleGuard } from 'src/auth/guards/role.guard';
 import { TokenGuard } from 'src/auth/guards/token.guard';
 import { Role } from 'src/common/role-enum';
 import { DifficultyLevel, WordDto } from './dto/word.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Id } from 'src/common/id.decorator';
-import { Request } from 'express';
+import { UserEntity } from 'src/database/entities';
 
 @ApiTags('words')
 @Controller('words')
@@ -49,8 +50,8 @@ export class WordController {
   findRandomByLevel(
     @Param('level') level: DifficultyLevel,
     @Req() request: Request,
-  ) {
-    // todo: userId
-    return this.wordService.findRandomByLevel(level, 1);
+  ) {    
+    const user = request.user as UserEntity;
+    return this.wordService.findRandomByLevel(level, user.id);
   }
 }

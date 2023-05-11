@@ -14,7 +14,10 @@ export class AuthService {
     });
 
     return {
-      token,
+      token: {
+        accessToken: token,
+        refreshToken: token
+      },
     };
   }
 }

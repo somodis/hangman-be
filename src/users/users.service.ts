@@ -1,5 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { UserDto } from './dto/user.dto';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { UpdateUserDto, UserDto } from './dto/user.dto';
 import { hash } from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/database/entities';
@@ -25,6 +25,18 @@ export class UsersService {
     });
   }
 
+  async update(id: number, data: UpdateUserDto) {
+    const user = await this.findOne(id);
+
+    if (!user) {
+      throw new NotFoundException('USER_DOES_NOT_EXISTS');
+    }
+    data.id = id;
+    
+    return await this.usersRepository.save(data);
+  }
+
+
   async findAll() {
     return this.usersRepository.find();
   }
@@ -46,14 +58,6 @@ export class UsersService {
 
   async findOne(id: number) {
     return this.usersRepository.findOneBy({ id });
-  }
-
-  async findUserGames(userId: number) {
-    //todo userid
-    return this.usersRepository.find({
-      relations: { games: true },
-      where: { games: { id: In([1]) } },
-    });
   }
 
   async findByUserName(username: string) {

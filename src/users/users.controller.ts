@@ -5,14 +5,14 @@ import {
   Body,
   UseGuards,
   Req,
-  UnauthorizedException,
+  Patch,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
 import { UsersService } from './users.service';
 import { Role } from 'src/common/role-enum';
-import { UserDto } from './dto/user.dto';
+import { UpdateUserDto, UserDto } from './dto/user.dto';
 import { TokenGuard } from 'src/auth/guards/token.guard';
 import { RoleGuard } from 'src/auth/guards/role.guard';
 import { UserEntity } from 'src/database/entities';
@@ -26,14 +26,14 @@ export class UsersController {
   @Post()
   // @ApiBearerAuth()
   // @UseGuards(TokenGuard, RoleGuard([Role.ADMIN]))
-  create(@Body() createUserDto: UserDto) {
+  async create(@Body() createUserDto: UserDto) {
     return this.usersService.create(createUserDto);
   }
 
   @Get()
   @ApiBearerAuth()
   @UseGuards(TokenGuard, RoleGuard([Role.ADMIN]))
-  findAll() {
+  async findAll() {
     return this.usersService.findAll();
   }
 
@@ -56,7 +56,14 @@ export class UsersController {
   @Get(':id')
   @ApiBearerAuth()
   @UseGuards(TokenGuard, RoleGuard([Role.ADMIN, Role.USER]))
-  findOne(@Id() id: number) {
+  async findOne(@Id() id: number) {
     return this.usersService.findOne(+id);
+  }
+
+  @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(TokenGuard, RoleGuard([Role.ADMIN, Role.USER]))
+  async updateUser(@Id() id: number, @Body() data: UpdateUserDto) {
+    return this.usersService.update(id,data);
   }
 }

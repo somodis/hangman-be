@@ -38,8 +38,12 @@ export class GameService {
     return this.gameRepository.findOneBy({ id });
   }
 
+  async findGameByUserId(userId: number) {
+    // TODO where game is in progress
+    return this.gameRepository.findOne({where: {user: {id: userId}}, relations: {word: true}})
+  }
+
   async update(id: number, data: GameDto) {
-    // todo: - check game end?
     const game = await this.findOne(id);
 
     if (!game) {
@@ -48,6 +52,6 @@ export class GameService {
 
     data.id = id;
 
-    return await this.gameRepository.save(data);
+    return await this.gameRepository.save({...data, guessedLetters: data.guessedLetters.toString()});
   }
 }

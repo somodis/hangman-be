@@ -56,13 +56,19 @@ export class WordService {
     });
     const playedWordIds = playedWords?.map((playedWord) => playedWord.id);
 
+    const diffLevel = LevelLengths[level];
+
+    if(!diffLevel){
+      throw new BadRequestException('Something is wrong with the level.');
+    }
+
     const wordsQb = this.wordRepository
       .createQueryBuilder('word')
       .where('word_length >= :minLength', {
-        minLength: LevelLengths[level].minLength,
+        minLength: diffLevel.minLength,
       })
       .andWhere('word_length <= :maxLength', {
-        maxLength: LevelLengths[level].maxLength,
+        maxLength: diffLevel.maxLength,
       });
 
     if (playedWordIds.length) {

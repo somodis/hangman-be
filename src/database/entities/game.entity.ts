@@ -43,5 +43,5 @@ export class GameEntity {
     type: 'varchar',
     name: 'guessed_letters',
   })
-  guessedLetters: string[];
+  guessedLetters: string;
 }

@@ -47,6 +47,13 @@ export class GameController {
     return this.gameService.findOne(id);
   }
 
+  @Get('/user/:id')
+  @ApiBearerAuth()
+  @UseGuards(TokenGuard, RoleGuard([Role.ADMIN, Role.USER]))
+  findGameByUserId(@Id() id: number) {
+    return this.gameService.findGameByUserId(id);
+  }
+
   @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(TokenGuard, RoleGuard([Role.ADMIN, Role.USER]))
