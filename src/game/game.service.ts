@@ -23,10 +23,12 @@ export class GameService {
 
     game.user = user;
     game.word = word;
+    game.isInProgress = true;
 
     const result = await this.gameRepository.save(game);
 
     await this.userRepository.save({ ...user, isInGame: true });
+
     return result;
   }
 
@@ -56,7 +58,7 @@ export class GameService {
 
     return await this.gameRepository.save({
       ...data,
-      guessedLetters: data.guessedLetters.toString(),
+      guessedLetters: data.guessedLetters?.toString() || null,
     });
   }
 }

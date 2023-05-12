@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class GameDto {
   @IsOptional()
@@ -19,4 +19,12 @@ export class GameDto {
   // @IsArray()
   // @IsString()
   guessedLetters?: string[];
+
+  @ApiProperty()
+  @IsBoolean()
+  isInProgress: boolean;
+
+  @ApiProperty()
+  @IsNumber()
+  mistakes: number;
 }
