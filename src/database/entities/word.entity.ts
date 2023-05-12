@@ -1,3 +1,4 @@
+import { DifficultyLevel } from 'src/word/dto/word.dto';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'word' })
@@ -20,4 +21,11 @@ export class WordEntity {
     nullable: false,
   })
   wordLength: number;
+
+  @Column({
+    type: 'enum',
+    enum: DifficultyLevel,
+    nullable: false,
+  })
+  difficulty: DifficultyLevel;
 }

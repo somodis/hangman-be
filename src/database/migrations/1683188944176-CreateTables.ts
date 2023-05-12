@@ -1,3 +1,4 @@
+import { DifficultyLevel } from 'src/word/dto/word.dto';
 import {
   MigrationInterface,
   QueryRunner,
@@ -72,6 +73,12 @@ export class CreateTables1683188944176 implements MigrationInterface {
             type: 'int',
             isNullable: false,
           },
+          {
+            name: 'difficulty',
+            type: 'enum',
+            enum: Object.values(DifficultyLevel),
+            isNullable: false,
+          },
         ],
       }),
     );
@@ -102,6 +109,18 @@ export class CreateTables1683188944176 implements MigrationInterface {
             name: 'guessed_letters',
             type: 'varchar',
             isNullable: true,
+          },
+          {
+            name: 'isInProgress',
+            type: 'tinyint',
+            isNullable: false,
+            default: 0,
+          },
+          {
+            name: 'mistakes',
+            type: 'int',
+            isNullable: false,
+            default: 0,
           },
         ],
       }),

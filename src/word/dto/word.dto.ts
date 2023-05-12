@@ -14,17 +14,20 @@ export enum DifficultyLevel {
   HARD = 'hard',
 }
 
-export const LevelLengths = {
-  easy: {
+export const Levels = [
+  {
     minLength: 6,
     maxLength: 8,
+    difficulty: DifficultyLevel.EASY,
   },
-  medium: {
+  {
     minLength: 9,
     maxLength: 11,
+    difficulty: DifficultyLevel.MEDIUM,
   },
-  hard: {
+  {
     minLength: 12,
     maxLength: 14,
+    difficulty: DifficultyLevel.HARD,
   },
-};
+];

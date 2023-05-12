@@ -26,8 +26,8 @@ export class GameService {
 
     const result = await this.gameRepository.save(game);
 
-    await this.userRepository.save({...user, isInGame: true});
-    return result 
+    await this.userRepository.save({ ...user, isInGame: true });
+    return result;
   }
 
   async findAll() {
@@ -39,8 +39,10 @@ export class GameService {
   }
 
   async findGameByUserId(userId: number) {
-    // TODO where game is in progress
-    return this.gameRepository.findOne({where: {user: {id: userId}}, relations: {word: true}})
+    return this.gameRepository.findOne({
+      where: { user: { id: userId }, isInProgress: true },
+      relations: { word: true }
+    });
   }
 
   async update(id: number, data: GameDto) {
@@ -52,6 +54,9 @@ export class GameService {
 
     data.id = id;
 
-    return await this.gameRepository.save({...data, guessedLetters: data.guessedLetters.toString()});
+    return await this.gameRepository.save({
+      ...data,
+      guessedLetters: data.guessedLetters.toString(),
+    });
   }
 }

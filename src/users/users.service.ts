@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UpdateUserDto, UserDto } from './dto/user.dto';
 import { hash } from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -32,10 +36,9 @@ export class UsersService {
       throw new NotFoundException('USER_DOES_NOT_EXISTS');
     }
     data.id = id;
-    
+
     return await this.usersRepository.save(data);
   }
-
 
   async findAll() {
     return this.usersRepository.find();

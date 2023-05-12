@@ -44,4 +44,16 @@ export class GameEntity {
     name: 'guessed_letters',
   })
   guessedLetters: string;
+
+  @Column({
+    type: 'tinyint',
+    name: 'isInProgress',
+  })
+  isInProgress: boolean;
+
+  @Column({
+    type: 'int',
+    name: 'mistakes',
+  })
+  mistakes: number;
 }

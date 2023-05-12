@@ -64,6 +64,6 @@ export class UsersController {
   @ApiBearerAuth()
   @UseGuards(TokenGuard, RoleGuard([Role.ADMIN, Role.USER]))
   async updateUser(@Id() id: number, @Body() data: UpdateUserDto) {
-    return this.usersService.update(id,data);
+    return this.usersService.update(id, data);
   }
 }

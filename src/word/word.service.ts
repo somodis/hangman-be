@@ -3,10 +3,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { DifficultyLevel, LevelLengths, WordDto } from './dto/word.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { GameEntity, WordEntity } from 'src/database/entities';
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DifficultyLevel, WordDto } from './dto/word.dto';
+import { GameEntity, WordEntity } from 'src/database/entities';
+import { getDifficultyByLength } from 'src/util/get-word-difficulty-by-length';
 
 @Injectable()
 export class WordService {
@@ -27,6 +28,7 @@ export class WordService {
     return await this.wordRepository.save({
       ...data,
       wordLength: data.word.length,
+      difficulty: getDifficultyByLength(data.word.length),
     });
   }
 
@@ -51,25 +53,18 @@ export class WordService {
   }
 
   async findRandomByLevel(level: DifficultyLevel, userId: number) {
+    if (!level) {
+      throw new BadRequestException('Invalid DifficultyLevel');
+    }
+
     const playedWords = await this.gameRepository.find({
       where: { user: { id: userId } },
     });
     const playedWordIds = playedWords?.map((playedWord) => playedWord.id);
 
-    const diffLevel = LevelLengths[level];
-
-    if(!diffLevel){
-      throw new BadRequestException('Something is wrong with the level.');
-    }
-
     const wordsQb = this.wordRepository
       .createQueryBuilder('word')
-      .where('word_length >= :minLength', {
-        minLength: diffLevel.minLength,
-      })
-      .andWhere('word_length <= :maxLength', {
-        maxLength: diffLevel.maxLength,
-      });
+      .where('difficulty = :level', { level });
 
     if (playedWordIds.length) {
       wordsQb.andWhere('id NOT IN (:...playedWordIds)', { playedWordIds });

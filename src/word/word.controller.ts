@@ -50,7 +50,7 @@ export class WordController {
   findRandomByLevel(
     @Param('level') level: DifficultyLevel,
     @Req() request: Request,
-  ) {    
+  ) {
     const user = request.user as UserEntity;
     return this.wordService.findRandomByLevel(level, user.id);
   }
