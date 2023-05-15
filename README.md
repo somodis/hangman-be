@@ -26,6 +26,10 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Swagger:
+
+http://localhost:3001/
+
 ## Installation
 
 ```bash
@@ -35,6 +39,10 @@ $ npm install
 ## Running the app
 
 ```bash
+# docker, db
+$ docker compose up -d
+$ npm run migration:run
+
 # development
 $ npm run start
 
