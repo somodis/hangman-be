@@ -24,8 +24,8 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  // @ApiBearerAuth()
-  // @UseGuards(TokenGuard, RoleGuard([Role.ADMIN]))
+  @ApiBearerAuth()
+  @UseGuards(TokenGuard, RoleGuard([Role.ADMIN]))
   async create(@Body() createUserDto: UserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -46,11 +46,9 @@ export class UsersController {
   }
 
   @Get('scoreboard')
-  @ApiBearerAuth()
-  @UseGuards(TokenGuard, RoleGuard([Role.ADMIN, Role.USER]))
   async scoreboard(@Req() request: Request) {
     const user = request.user as UserEntity;
-    return this.usersService.scoreboard(user.id);
+    return this.usersService.scoreboard(user?.id);
   }
 
   @Get(':id')

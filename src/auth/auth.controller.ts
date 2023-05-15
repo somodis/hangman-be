@@ -5,7 +5,7 @@ import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LocalGuard } from './guards/local.guard';
 import { UserEntity } from 'src/database/entities';
-import { LoginDto } from './dto/login.dto';
+import { LoginDto, LogoutDto } from './dto/auth.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -19,5 +19,14 @@ export class AuthController {
     const user = request.user as UserEntity;
 
     return this.authService.login(user);
+  }
+
+  @Post('logout')
+  @ApiBody({ type: LogoutDto, required: true })
+  logout(@Req() request: Request) {
+    // TODO
+    // const user = request.user as UserEntity;
+
+    // return this.authService.login(user);
   }
 }
