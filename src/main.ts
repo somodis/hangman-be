@@ -1,21 +1,16 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import {
-  DocumentBuilder,
-  SwaggerCustomOptions,
-  SwaggerDocumentOptions,
-  SwaggerModule,
-} from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerCustomOptions, SwaggerDocumentOptions, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     whitelist: true,
-  //   }),
-  // );
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Hangman Game')
@@ -27,6 +22,7 @@ async function bootstrap() {
   const options: SwaggerDocumentOptions = {
     operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
   };
+
   const customOptions: SwaggerCustomOptions = {
     customSiteTitle: 'Hangman Game API',
   };

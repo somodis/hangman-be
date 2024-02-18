@@ -8,10 +8,7 @@ import { TokenPayload } from '../interfaces/token-payload.interface';
 
 @Injectable()
 export class TokenStrategy extends PassportStrategy(Strategy, 'token') {
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly configService: ConfigService,
-  ) {
+  constructor(private readonly usersService: UsersService, private readonly configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,

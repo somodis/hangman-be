@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
+import { getDifficultyByLength } from 'src/util/get-word-difficulty-by-length';
 import { words } from '../../util/words';
 import { WordEntity } from '../entities';
-import { getDifficultyByLength } from 'src/util/get-word-difficulty-by-length';
 
 export class FillWordsTable1683196461011 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

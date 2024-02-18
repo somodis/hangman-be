@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  RelationId,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, RelationId } from 'typeorm';
 
 import { UserEntity } from './user.entity';
 import { WordEntity } from './word.entity';
@@ -18,7 +11,6 @@ export class GameEntity {
   id: number;
 
   @ManyToOne(() => WordEntity, {
-    // @ManyToOne(() => WordEntity, (word: WordEntity) => word.id, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
@@ -29,7 +21,6 @@ export class GameEntity {
   wordId: number;
 
   @ManyToOne(() => UserEntity, {
-    // @ManyToOne(() => UserEntity, (user: UserEntity) => user.id, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

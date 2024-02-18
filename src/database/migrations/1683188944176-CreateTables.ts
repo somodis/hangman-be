@@ -1,10 +1,5 @@
 import { DifficultyLevel } from 'src/word/dto/word.dto';
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
 export class CreateTables1683188944176 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

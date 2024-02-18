@@ -1,10 +1,4 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  mixin,
-  Type,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, mixin, Type } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { UserEntity } from 'src/database/entities';

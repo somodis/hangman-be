@@ -1,13 +1,10 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
-import { UpdateUserDto, UserDto } from './dto/user.dto';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { hash } from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/database/entities';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { UserDto } from './dto/user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -23,7 +20,7 @@ export class UsersService {
       throw new BadRequestException('USER_ALREADY_EXISTS');
     }
     const hashedPassword = await hash(data.password, 10);
-    return await this.usersRepository.save({
+    return this.usersRepository.save({
       ...data,
       password: hashedPassword,
     });
@@ -35,14 +32,14 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('USER_DOES_NOT_EXISTS');
     }
-    data.id = id;
 
-    return await this.usersRepository.save(data);
+    return this.usersRepository.save({ ...data, id });
   }
 
   async findAll() {
     return this.usersRepository.find();
   }
+
   async scoreboard(userId?: number) {
     const limit = 3;
 
@@ -53,7 +50,9 @@ export class UsersService {
 
     if (userId) {
       const me = await this.usersRepository.findOneBy({ id: userId });
-      me.score < toplist[toplist.length - 1].score && toplist.push(me);
+      if (me.score < toplist[toplist.length - 1].score) {
+        toplist.push(me);
+      }
     }
 
     return toplist;
@@ -64,7 +63,7 @@ export class UsersService {
   }
 
   async findByUserName(username: string) {
-    return await this.usersRepository.findOneBy({ username });
+    return this.usersRepository.findOneBy({ username });
   }
 
   async findPasswordByUsername(username: string) {

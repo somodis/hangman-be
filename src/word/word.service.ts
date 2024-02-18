@@ -1,13 +1,9 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DifficultyLevel, WordDto } from './dto/word.dto';
 import { GameEntity, WordEntity } from 'src/database/entities';
 import { getDifficultyByLength } from 'src/util/get-word-difficulty-by-length';
+import { DifficultyLevel, WordDto } from './dto/word.dto';
 
 @Injectable()
 export class WordService {
@@ -25,7 +21,7 @@ export class WordService {
       throw new BadRequestException('WORD_ALREADY_EXISTS');
     }
 
-    return await this.wordRepository.save({
+    return this.wordRepository.save({
       ...data,
       wordLength: data.word.length,
       difficulty: getDifficultyByLength(data.word.length),
@@ -62,9 +58,7 @@ export class WordService {
     });
     const playedWordIds = playedWords?.map((playedWord) => playedWord.id);
 
-    const wordsQb = this.wordRepository
-      .createQueryBuilder('word')
-      .where('difficulty = :level', { level });
+    const wordsQb = this.wordRepository.createQueryBuilder('word').where('difficulty = :level', { level });
 
     if (playedWordIds.length) {
       wordsQb.andWhere('id NOT IN (:...playedWordIds)', { playedWordIds });

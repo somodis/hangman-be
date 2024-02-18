@@ -1,13 +1,7 @@
 import { ApiHideProperty } from '@nestjs/swagger';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { GameEntity } from './game.entity';
+import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Role } from 'src/common/role-enum';
+import { GameEntity } from './game.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {
@@ -32,9 +26,6 @@ export class UserEntity {
 
   @Column({ name: 'role', type: 'varchar', nullable: true })
   role: Role;
-
-  // @OneToMany(() => GameEntity, (game: GameEntity) => game.user)
-  // games: GameEntity[];
 
   @OneToMany(() => GameEntity, (game: GameEntity) => game.user)
   @JoinTable({

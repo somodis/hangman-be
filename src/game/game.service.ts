@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { GameDto } from './dto/game.dto';
 import { GameEntity, UserEntity, WordEntity } from 'src/database/entities';
+import { GameDto } from './dto/game.dto';
 
 @Injectable()
 export class GameService {
@@ -19,13 +19,8 @@ export class GameService {
   async create(data: GameDto) {
     const user = await this.userRepository.findOneBy({ id: data.userId });
     const word = await this.wordRepository.findOneBy({ id: data.wordId });
-    const game = new GameEntity();
 
-    game.user = user;
-    game.word = word;
-    game.isInProgress = true;
-
-    const result = await this.gameRepository.save(game);
+    const result = await this.gameRepository.save({ user, word, isInProgress: true });
 
     await this.userRepository.save({ ...user, isInGame: true });
 
@@ -43,7 +38,7 @@ export class GameService {
   async findGameByUserId(userId: number) {
     return this.gameRepository.findOne({
       where: { user: { id: userId }, isInProgress: true },
-      relations: { word: true }
+      relations: { word: true },
     });
   }
 
@@ -54,10 +49,9 @@ export class GameService {
       throw new NotFoundException();
     }
 
-    data.id = id;
-
-    return await this.gameRepository.save({
+    return this.gameRepository.save({
       ...data,
+      id,
       guessedLetters: data.guessedLetters?.toString() || null,
     });
   }

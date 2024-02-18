@@ -2,10 +2,11 @@ import { Request } from 'express';
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 
+import { UserEntity } from 'src/database/entities';
 import { AuthService } from './auth.service';
 import { LocalGuard } from './guards/local.guard';
-import { UserEntity } from 'src/database/entities';
-import { LoginDto, LogoutDto } from './dto/auth.dto';
+import { LoginDto } from './dto/auth.dto';
+import { LogoutDto } from './dto/logout.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -26,7 +27,6 @@ export class AuthController {
   logout(@Req() request: Request) {
     // TODO
     // const user = request.user as UserEntity;
-
     // return this.authService.login(user);
   }
 }

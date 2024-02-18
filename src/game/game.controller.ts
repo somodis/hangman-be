@@ -1,22 +1,14 @@
 import { Request } from 'express';
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  UseGuards,
-  Req,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, UseGuards, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { GameService } from './game.service';
-import { GameDto } from './dto/game.dto';
 import { TokenGuard } from 'src/auth/guards/token.guard';
 import { RoleGuard } from 'src/auth/guards/role.guard';
 import { Role } from 'src/common/role-enum';
 import { Id } from 'src/common/id.decorator';
 import { UserEntity } from 'src/database/entities';
+import { GameDto } from './dto/game.dto';
+import { GameService } from './game.service';
 
 @ApiTags('game')
 @Controller('game')
@@ -27,10 +19,9 @@ export class GameController {
   @ApiBearerAuth()
   @UseGuards(TokenGuard, RoleGuard([Role.ADMIN, Role.USER]))
   create(@Body() createGameDto: GameDto, @Req() request: Request) {
-    const user = request.user as UserEntity;
-    createGameDto.userId = user.id;
+    const { id } = request.user as UserEntity;
 
-    return this.gameService.create(createGameDto);
+    return this.gameService.create({ ...createGameDto, id });
   }
 
   @Get()
